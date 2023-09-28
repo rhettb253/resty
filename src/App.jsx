@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 import './App.scss';
 
@@ -15,26 +16,35 @@ function App () {
 
   const [data, setData] = useState();
   const [requestParams, setRequestParams] = useState({});
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [error, setError] = useState(null);
 
-  const callApi = (requestParams = {}) => {
+
+  const callApi = (formData) => {
+    let method = formData.method.toLowerCase();
+    console.log(method);
+    axios.get(formData.url)
+      .then(response => {
+        // Handle the successful response here
+        console.log(response);
+        setData(response.data);
+      })
+      .catch(err => {
+        // Handle any errors that occur during the request
+        setError(err);
+      });
     // mock output
-    setData({
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
-    });
-    setRequestParams(requestParams);
+
+    setRequestParams(formData);
   }
 
     return (
       <React.Fragment>
         <Header />
-        <div>Request Method: {requestParams.method}</div>
-        <div>URL: {requestParams.url}</div>
-        <Form handleApiCall={callApi} />
-        <Results data={data} />
+        <Form handleApiCall={callApi} setShowSpinner={setShowSpinner} />
+        <div style={{margin: "0 auto"}}>Request Method: {requestParams.method}</div>
+        <div style={{margin: "1rem auto"}}>URL: {requestParams.url}</div>
+        <Results data={data} error={error} showSpinner={showSpinner} />
         <Footer />
       </React.Fragment>
     );

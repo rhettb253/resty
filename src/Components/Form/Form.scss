@@ -6,9 +6,17 @@ form {
   margin: auto;
   width: 200px;
 
+  input {
+    padding: 0.5rem;
+  }
+
   label {
     display: flex;
     margin: 1rem 0;
+
+    span.url {
+      padding-top: 0.5rem;
+    }
 
     &.methods {
       span {
@@ -17,10 +25,23 @@ form {
         padding: .25rem .5rem;
         background: #ccc;
 
+        &#get {
+          background-color: rgb(246, 88, 88);
+        }
+        
         &:hover, &.active {
           background: #fff;
+          color: rgb(246, 88, 88);
         }
+
       }
+    }
+  }
+
+  button {
+    &:hover, &.active {
+      background: #fff;
+      color: rgb(246, 88, 88);
     }
   }
 }
