@@ -16,17 +16,22 @@ body {
     height: 100%;
   }
 
+  section {
+    margin: auto;
+  }
+
   footer {
-    background: darken($backgroundColor, 50);
+    background: darken($backgroundColor, 75);
     border-top: 1px solid #eee;
     padding: 1em 3em;
     margin: 0;
+    color: rgb(246, 88, 88);
   }
 
   header {
     background: darken($backgroundColor, 75);
     border-bottom: 1px solid #eee;
-    color: #eee;
+    color: rgb(246, 88, 88);
     padding: 0;
     margin: 0;
     text-align: center;
