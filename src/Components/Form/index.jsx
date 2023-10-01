@@ -4,6 +4,7 @@ import './Form.scss';
 function Form (props) {
   const [method, setMethod] = useState('GET');
   const [url, setUrl] = useState();
+  // const [config, setConfig] = useState();
 
   const handleSubmit = e => {
     e.preventDefault();

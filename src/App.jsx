@@ -15,26 +15,67 @@ import Results from './Components/Results';
 function App () {
 
   const [data, setData] = useState();
+  const [status, setStatus] = useState();
   const [requestParams, setRequestParams] = useState({});
+  const [displayResults, setDisplayResults] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
-  const [error, setError] = useState(null);
-
 
   const callApi = (formData) => {
     let method = formData.method.toLowerCase();
-    console.log(method);
-    axios.get(formData.url)
-      .then(response => {
-        // Handle the successful response here
-        console.log(response);
-        setData(response.data);
-      })
-      .catch(err => {
+    if (method === 'get') {
+      axios.get(formData.url)
+        .then(response => {
+          // Handle the successful response here
+          setStatus(response.status);
+          setData(response.data);
+      }).catch(err => {
         // Handle any errors that occur during the request
-        setError(err);
+        setStatus(err.status);
+        setData(err);
       });
-    // mock output
-
+    } else if (method === 'post') {
+      let config = document.getElementById('objectEntry').value;
+      // console.log(JSON.parse(config));
+      try{
+      axios.post(formData.url, JSON.parse(config), {
+        headers: {
+          'Content-Type': 'application/json'
+    }})
+        .then(response => {
+          // Handle the successful response here
+          setStatus(response.status);
+          setData(response.data);
+          console.log(data);
+      })} catch(err) {
+        // Handle any errors that occur during the request
+        console.log('we had an error');
+        setStatus(err.status);
+        setData(err);
+      }
+    } else if (method === 'put') {
+      axios.put(formData.url, document.getElementById('objectEntry').value)
+        .then(response => {
+          // Handle the successful response here
+          setStatus(response.status);
+          setData(response.data);
+      }).catch(err => {
+        // Handle any errors that occur during the request
+        setStatus(err.status);
+        setData(err);
+      }); 
+    } else if (method === 'delete') {
+      axios.delete(formData.url)
+        .then(response => {
+          // Handle the successful response here
+          setStatus(response.status);
+          setData(response.data);
+      }).catch(err => {
+        // Handle any errors that occur during the request
+        setStatus(err.status);
+        setData(err);
+      });
+    }
+    setDisplayResults(true);
     setRequestParams(formData);
   }
 
@@ -42,9 +83,9 @@ function App () {
       <React.Fragment>
         <Header />
         <Form handleApiCall={callApi} setShowSpinner={setShowSpinner} />
-        <div style={{margin: "0 auto"}}>Request Method: {requestParams.method}</div>
-        <div style={{margin: "1rem auto"}}>URL: {requestParams.url}</div>
-        <Results data={data} error={error} showSpinner={showSpinner} />
+        {displayResults && <div style={{margin: "0 auto"}}>Request Method: {requestParams.method}</div>}
+        {displayResults && <div style={{margin: "1rem auto"}}>URL: {requestParams.url}</div>}
+        {displayResults && <Results status={status} data={data} showSpinner={showSpinner} />}
         <Footer />
       </React.Fragment>
     );
