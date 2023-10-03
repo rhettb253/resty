@@ -67,7 +67,7 @@ function Form (props) {
           <label >
             <span className='url'>URL: </span>
             <input name='url' type='text' onChange={(e) => setUrl(e.target.value)} />
-            <button type="submit">GO!</button>
+            <button data-testid="goButton" type="submit">GO!</button>
           </label>
           <label className="methods">
             <span onClick={getDeleteClick} id="get" >GET</span>
