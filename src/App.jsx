@@ -12,11 +12,11 @@ import Results from './Components/Results';
 import History from './Components/History';
 
 function reducer(history, action) {
-  switch (action) {
+  switch (action.case) {
     case 'addHistory':
-      return {}
+      return [...history, {method: action.method, url:action.url}]
     case 'selectHistory':
-      return {}
+      return action.callApi(action)
   }
 }
 
@@ -37,6 +37,7 @@ function App () {
           // Handle the successful response here
           setStatus(response.status);
           setData(response.data);
+          dispatch({case: 'addHistory', method: formData.method, url: formData.url });
       }).catch(err => {
         // Handle any errors that occur during the request
         setStatus(err.status);
@@ -54,7 +55,7 @@ function App () {
           // Handle the successful response here
           setStatus(response.status);
           setData(response.data);
-          console.log(data);
+          dispatch({case: 'addHistory', method: formData.method, url: formData.url });
       })} catch(err) {
         // Handle any errors that occur during the request
         console.log('we had an error');
@@ -92,10 +93,10 @@ function App () {
       <React.Fragment>
         <Header />
         <Form handleApiCall={callApi} setShowSpinner={setShowSpinner} />
-        {displayResults && <div style={{margin: "0 auto"}}>Request Method: {requestParams.method}</div>}
-        {displayResults && <div style={{margin: "1rem auto"}}>URL: {requestParams.url}</div>}
+        {displayResults && <div style={{marginLeft: "10%"}}>Request Method: {requestParams.method}</div>}
+        {displayResults && <div style={{margin: "1rem 0 0 10%"}}>URL: {requestParams.url}</div>}
         {displayResults && <Results status={status} data={data} showSpinner={showSpinner} />}
-        <History />
+        {history.length > 0 && <History history={history} handleApiCall={callApi} dispatch={dispatch} />}
         <Footer />
       </React.Fragment>
     );
