@@ -17,15 +17,34 @@ body {
   }
 
   section {
-    margin:0 20%;
+    margin: 1rem 10% 0;
+    width: 50%;
   }
 
-  footer {
-    background: darken($backgroundColor, 75);
-    border-top: 1px solid #eee;
-    padding: 1em 3em;
-    margin: 0;
-    color: rgb(246, 88, 88);
+  div.history {
+    position: fixed;
+    top: 20%;
+    right: 5%;
+    padding: 2rem;
+    width: 30%;
+    height: 60%;
+    border: 1px black solid;
+    overflow-y: auto;
+    box-shadow: 2px 4px 5px 5px rgb(77, 72, 72);
+  }
+
+  div.history p {
+    white-space: nowrap; /* Prevent text from wrapping */
+    text-overflow: ellipsis; /* Add ellipsis (...) for truncated text */
+    overflow-x: "auto";
+  }
+
+  li:hover {
+    cursor: pointer;
+    background-color: rgb(246, 88, 88);
+    border-radius: 2rem;
+    box-shadow: 2px 2px 2px 2px;
+    padding: 0 0.5rem;
   }
 
   header {
@@ -35,5 +54,13 @@ body {
     padding: 0;
     margin: 0;
     text-align: center;
+  } 
+  
+  footer {
+    background: darken($backgroundColor, 75);
+    border-top: 1px solid #eee;
+    padding: 1em 3em;
+    margin: 0;
+    color: rgb(246, 88, 88);
   }
 }
