@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import axios from 'axios';
-
 import './App.scss';
-
 // Let's talk about using index.js and some other name in the component folder.
 // There's pros and cons for each way of doing this...
 // OFFICIALLY, we have chosen to use the Airbnb style guide naming convention. 
@@ -11,9 +9,20 @@ import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Form from './Components/Form';
 import Results from './Components/Results';
+import History from './Components/History';
+
+function reducer(history, action) {
+  switch (action) {
+    case 'addHistory':
+      return {}
+    case 'selectHistory':
+      return {}
+  }
+}
 
 function App () {
 
+  const [history, dispatch] = useReducer(reducer, []);
   const [data, setData] = useState();
   const [status, setStatus] = useState();
   const [requestParams, setRequestParams] = useState({});
@@ -86,6 +95,7 @@ function App () {
         {displayResults && <div style={{margin: "0 auto"}}>Request Method: {requestParams.method}</div>}
         {displayResults && <div style={{margin: "1rem auto"}}>URL: {requestParams.url}</div>}
         {displayResults && <Results status={status} data={data} showSpinner={showSpinner} />}
+        <History />
         <Footer />
       </React.Fragment>
     );
