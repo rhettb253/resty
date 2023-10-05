@@ -1,7 +1,7 @@
 import App from "../src/App";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import {expect, jest, it, describe} from '@jest/globals';
-import axios from "axios";
+// import axios from "axios";
 
 
 
@@ -10,6 +10,12 @@ describe("stuff", () => {
     render(<App />);
     const header = screen.getByTestId("header");
     expect(header).toBeVisible();
+  });
+
+  it("something else is visible", () => {
+    render(<App />);
+    const input = screen.getByTestId("urlInput");
+    expect(input).toBeInTheDocument();
   });
 
   // it("submit calls callApi", () => {
